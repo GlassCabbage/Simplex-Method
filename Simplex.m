@@ -6,9 +6,14 @@ clc
 % A = [3 2 0; 1 4 0; 2 3 1];
 % b = [10; 11; 13];
 % c = [-4 -5 -1];
-A=[-3,-1;-1,-4];
-b=[-15;-10];
-c=[1,1];
+
+% A=[-3,-1;-1,-4];
+% b=[-15;-10];
+% c=[1,1];
+
+A=[1 -1 -1 -1 0 0;-1 -1 1 -3 1 1];
+b=[-1;-1];
+c=[1 5 1 10 1 3];
 
 
 %% 单纯形表初始化
@@ -55,19 +60,19 @@ if ~isempty(find(b<0, 1))
              break
          end
      end
-     disp(['选择出基',T.Properties.RowNames{baseout}])
+     disp(['选择出基',T.Properties.RowNames{baseout},'=',num2str(table2array(T(baseout,1)))])
 
      hasNum=false;
      for j = 2:m+n+1
+         if table2array(T(baseout,j))>=0
+             continue
+         end
          if ~hasNum
              choose = j;
              num = table2array(T(1,j))/table2array(T(baseout,j));
              if ~isnan(num)
                  hasNum=true;
              end
-             continue
-         end
-         if table2array(T(baseout,j))>=0
              continue
          end
          if table2array(T(1,j))/table2array(T(baseout,j))>num
