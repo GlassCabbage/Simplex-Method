@@ -1,5 +1,6 @@
 clear
 clc
+format rational
 
 %% Input
 % input A b c should be SLP
@@ -11,9 +12,13 @@ clc
 % b=[-15;-10];
 % c=[1,1];
 
-A=[1 -1 -1 -1 0 0;-1 -1 1 -3 1 1];
+% A=[1 -1 -1 -1 0 0;-1 -1 1 -3 1 1];
+% b=[-1;-1];
+% c=[1 5 1 10 1 3];
+
+A=[-5,-3;-4,-6];
 b=[-1;-1];
-c=[1 5 1 10 1 3];
+c=[1 1];
 
 
 %% 单纯形表初始化
@@ -35,6 +40,8 @@ T = array2table([0,c,zeros(1,m) ;b,A, eye(m)],'VariableNames',name,'RowNames',rn
 
 disp('初始单纯形表为：')
 disp(T);
+disp('初始表的分数形式为：')
+disp(T.Variables)
 
 base=n+1:m+n;
 
@@ -106,6 +113,8 @@ if ~isempty(find(b<0, 1))
          T(j,:) = array2table((table2array(T(j,:)) - table2array(T(baseout,:)) * (table2array(T(j,basein)) / table2array(T(baseout,basein)))));
      end
      disp(T)
+     disp('表的分数形式为：')
+     disp(T.Variables)
      
      disp('本次迭代得到的解为：')
      for j = 1:m+n
@@ -212,6 +221,8 @@ for i=1:100
          T(j,:) = array2table((table2array(T(j,:)) - table2array(T(baseout,:)) * (table2array(T(j,basein)) / table2array(T(baseout,basein)))));
      end
      disp(T)
+     disp('表的分数形式为：')
+     disp(T.Variables)
      
      disp('本次迭代得到的解为：')
      for j = 1:m+n
